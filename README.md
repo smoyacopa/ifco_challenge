@@ -67,8 +67,8 @@ All 5 test files will run automatically and results will be printed to the conso
 
 - **Databricks + PySpark** — notebooks developed and tested in Databricks Community Edition
 - **Separation of concerns** — business logic lives in `src/transformations.py` as pure Python functions, keeping notebooks focused on orchestration and making unit testing possible without a Spark cluster
-- **Dynamic path resolution** — `000_Setup` detects the repository root at runtime using `dbutils`, so notebooks work regardless of where the repo is cloned
-- **Data ingestion from GitHub** — source files are downloaded from the public repository URL to `/tmp/` on the cluster driver, avoiding any dependency on DBFS or Unity Catalog
+- **Dynamic path resolution** — 000_Setup detects the repository root at runtime using dbutils and resolves all paths relative to it. Notebooks work regardless of where the repo is cloned, with no hardcoded paths
+- **Local data access** — source files are read directly from the cloned repository under /Workspace/Repos/. This avoids dependencies on DBFS, Unity Catalog, or external downloads, and is compatible with Databricks Runtime 13+ where file:///tmp/ and HTTPS paths are restricted
 - **Company name deduplication** — company names are normalised before grouping (lowercase, remove non-alphanumeric characters) to consolidate dirty duplicates such as `"Fresh Fruits Co"` / `"Fresh Fruits c.o"`
 - **Invoice deduplication** — one `order_id` has two invoices with identical amounts (exact duplicate). Deduplication is applied using `ROW_NUMBER()` before commission calculation to avoid inflating results
 - **VAT handling** — invoice amounts are stored in cents and VAT as a percentage string. Net value is calculated as `gross / (1 + vat/100) / 100`
