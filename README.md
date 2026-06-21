@@ -53,7 +53,7 @@ All 5 test files will run automatically and results will be printed to the conso
 ## How to run — notebooks (Databricks)
 
 1. Open [Databricks Community Edition](https://community.cloud.databricks.com)
-2. Go to **Repos** → **Add repo** → paste the repository URL:
+2. Go to **Repos** → **Add repo/Git folder** → paste the repository URL:
    ```
    https://github.com/smoyacopa/ifco_challenge
    ```
@@ -72,4 +72,3 @@ All 5 test files will run automatically and results will be printed to the conso
 - **Company name deduplication** — company names are normalised before grouping (lowercase, remove non-alphanumeric characters) to consolidate dirty duplicates such as `"Fresh Fruits Co"` / `"Fresh Fruits c.o"`
 - **Invoice deduplication** — one `order_id` has two invoices with identical amounts (exact duplicate). Deduplication is applied using `ROW_NUMBER()` before commission calculation to avoid inflating results
 - **VAT handling** — invoice amounts are stored in cents and VAT as a percentage string. Net value is calculated as `gross / (1 + vat/100) / 100`
-- **Commission tiers** — position 1 (main owner): 6%, position 2: 2.5%, position 3: 0.95%, remaining positions: 0%
