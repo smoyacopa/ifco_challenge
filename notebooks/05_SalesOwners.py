@@ -58,7 +58,7 @@ df_invoices = spark.sql("""
 
 # COMMAND ----------
 
-# Exploded salesowners y recopilar únicos por empresa
+# Explode salesowners and get unique values by company
 
 df_orders.createOrReplaceTempView("orders")
 

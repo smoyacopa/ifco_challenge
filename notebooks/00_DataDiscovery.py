@@ -19,6 +19,7 @@ spark = SparkSession.builder.getOrCreate()
 
 # COMMAND ----------
 
+# DBTITLE 1,Cell 3
 # After manual inspection of the csv --> headers, separator and quote/escape characters identified  
 df_orders_raw = spark.read \
     .option("header", "true") \
@@ -100,12 +101,9 @@ def null_report(df, label):
     df.select(exprs).show(1, truncate=False)
  
 null_report(df_orders_raw, "orders")
-# HALLAZGOS esperados:
-#   - contact_data: ~8 filas vacías/nulas  → placeholder "John Doe" / "Unknown"
-#   - salesowners:  0 nulos (siempre hay al menos uno)
  
 null_report(df_invoices, "invoicing")
-# HALLAZGOS esperados: sin nulos en los campos clave
+
 
 # COMMAND ----------
 
@@ -143,31 +141,22 @@ dup_order_inv.show(truncate=False)
 # MAGIC Discoveries 
 # MAGIC - Orders do not have duplicated IDs (order_id)
 # MAGIC - Invoices do not have duplicated IDs (invoice_id)
-# MAGIC - Invoices have one duplicated order_id
+# MAGIC - Invoices have one duplicated orderId
 
 # COMMAND ----------
 
 # We have to investigate if the duplicated order_ID comes from a duplicated line or it is a different issue
-duplicated_ids = df_invoices.groupBy("order_id") \
+# Show the duplicated invoice to understand the issue
+duplicated_order_ids = df_invoices.groupBy("orderId") \
     .count() \
     .filter(F.col("count") > 1) \
-    .select("order_id")
+    .select("orderId")
 
-# Rows with duplicated order_id
-df_only_duplicates = df_orders_raw.join(duplicated_ids, on="order_id", how="inner")
-
-# Compare with distinct
-total_rows = df_only_duplicates.count()
-distinct_rows = df_only_duplicates.distinct().count()
-
-print("Result:")
-if total_rows > distinct_rows and distinct_rows == duplicated_ids.count():
-    print("Exact duplicates")
-else:
-    print("Not duplicates")
-
+df_invoices.join(duplicated_order_ids, on="orderId", how="inner") \
+    .show(truncate=False)
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC
+# MAGIC Discovery
+# MAGIC - Duplicated invoice that we can clean

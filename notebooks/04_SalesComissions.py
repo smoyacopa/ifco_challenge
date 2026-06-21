@@ -79,7 +79,7 @@ df_salesowners = spark.sql("""
 
 df_salesowners.show(20, truncate=False)
 
- # Join orders - invoices and comissions calculation calcular comissions
+ # Join orders - invoices and comissions calculation comissions
 
 commission_rate_udf = F.udf(get_commission_rate, DoubleType())
 

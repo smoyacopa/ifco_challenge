@@ -37,6 +37,23 @@ def get_crate_distribution_by_company(df: DataFrame) -> DataFrame:
         .orderBy("company_name_clean", "crate_type")
     )
 
+def parse_contact_json(raw: str) -> dict:
+    """
+    Parses the contact_data field regardless of format:
+    - Empty / None      → {}
+    - Array  [{...}]   → first element
+    - Object {...}      → directly
+    """
+    if not raw or raw.strip() == "":
+        return {}
+    raw = raw.strip()
+    try:
+        if not raw.startswith("["):
+            raw = f"[{raw}]"
+        parsed = json.loads(raw)
+        return parsed[0] if parsed else {}
+    except (json.JSONDecodeError, IndexError):
+        return {}
 
 def get_full_name(raw: str) -> str:
     """
