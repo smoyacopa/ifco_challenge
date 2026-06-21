@@ -28,7 +28,7 @@ ifco_challenge/
 │   ├── test_04.py
 │   └── test_05.py
 ├── dashboard/
-│   └── ifco_dashboard.pbix       ← optional: Power BI visualization (test 6)
+│   └── ifco_dashboard.pbix       ← Power BI visualization (test 6)
 ├── Dockerfile
 └── requirements.txt
 ```
