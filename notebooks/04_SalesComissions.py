@@ -3,12 +3,9 @@ import re
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.types import *
-
+from transformations import calculate_net_value_eur, get_commission_rate
 
 spark = SparkSession.builder.getOrCreate()
- 
-ORDERS_PATH     = "/Volumes/workspace/ifco_test/ifco_resources/orders.csv"
-INVOICING_PATH  = "/Volumes/workspace/ifco_test/ifco_resources/invoicing_data.json"
 
 # COMMAND ----------
 
@@ -16,7 +13,7 @@ INVOICING_PATH  = "/Volumes/workspace/ifco_test/ifco_resources/invoicing_data.js
 df_invoices = (
     spark.read
     .option("multiLine", "true")
-    .json("INVOICING_PATH")
+    .json(INVOICING_PATH)
     .select(F.explode("data.invoices").alias("inv"))
     .select(
         F.col("inv.id").alias("invoice_id"),
@@ -34,7 +31,7 @@ df_invoices = spark.sql("""
     FROM (
         SELECT *,
                ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY invoice_id) AS rn
-        FROM invoices_raw
+        FROM invoices
     )
     WHERE rn = 1
 """)

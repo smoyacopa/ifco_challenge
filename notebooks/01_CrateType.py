@@ -6,8 +6,6 @@ import re
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.types import *
-import sys
-sys.path.insert(0, "/Workspace/IFCO_Challenge/src")
 from transformations import normalize_company_name, get_crate_distribution_by_company
 
 

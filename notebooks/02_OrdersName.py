@@ -6,23 +6,12 @@ from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.types import *
 import sys
-sys.path.insert(0, "/Workspace/IFCO_Challenge/src")
 from transformations import get_full_name
 
-import urllib.request
-
-BASE_URL = "https://raw.githubusercontent.com/smoyacopa/ifco-data-challenge/main/data"
-
-urllib.request.urlretrieve(f"{BASE_URL}/orders.csv", "/tmp/orders.csv")
-urllib.request.urlretrieve(f"{BASE_URL}/invoicing_data.json", "/tmp/invoicing_data.json")
-
-ORDERS_PATH     = "file:///tmp/orders.csv"
-INVOICING_PATH  = "file:///tmp/invoicing_data.json"
-
 spark = SparkSession.builder.getOrCreate()
- 
-ORDERS_PATH     = "/Volumes/workspace/ifco_test/ifco_resources/orders.csv"
-INVOICING_PATH  = "/Volumes/workspace/ifco_test/ifco_resources/invoicing_data.json"
+
+# COMMAND ----------
+
 
 df_orders_raw = (
     spark.read
@@ -31,9 +20,6 @@ df_orders_raw = (
     .option("escape", '"')
     .csv(ORDERS_PATH)
 )
-
-# COMMAND ----------
-
 
 # Custom function is used to apply the transformations
 get_full_name_udf = F.udf(get_full_name, StringType())
