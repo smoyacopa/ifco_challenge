@@ -1,4 +1,8 @@
 # Databricks notebook source
+# MAGIC %run ./000_Setup
+
+# COMMAND ----------
+
 # Objetive: To undestand the structure, quality and quirks of the two files before solving the exercises
 
 # Files:
@@ -13,6 +17,7 @@ from pyspark.sql.types import *
 
 spark = SparkSession.builder.getOrCreate()
 
+%run ./000_Setup
 
 # COMMAND ----------
 

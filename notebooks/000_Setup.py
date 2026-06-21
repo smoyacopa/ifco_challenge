@@ -1,5 +1,4 @@
 # Databricks notebook source
-# 00_Setup.py
 import urllib.request
 from pyspark.sql import functions as F
 import sys

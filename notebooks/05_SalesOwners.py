@@ -1,4 +1,8 @@
 # Databricks notebook source
+# MAGIC %run ./000_Setup
+
+# COMMAND ----------
+
 import re
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F

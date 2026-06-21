@@ -1,4 +1,8 @@
 # Databricks notebook source
+# MAGIC %run ./000_Setup
+
+# COMMAND ----------
+
 # Objective: Provide a df containing 'order_id' and 'contact_address' that should adhere to the following information and format: "city name, postal code". If the city name is not available, the placeholder "Unknown" should be used. If the postal code is not known, the placeholder "UNK00" should be used.
 
 import re
@@ -6,13 +10,12 @@ from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.types import *
 import sys
-sys.path.insert(0, "/Workspace/IFCO_Challenge/src")
 from transformations import get_address
 
 spark = SparkSession.builder.getOrCreate()
- 
-ORDERS_PATH     = "/Volumes/workspace/ifco_test/ifco_resources/orders.csv"
-INVOICING_PATH  = "/Volumes/workspace/ifco_test/ifco_resources/invoicing_data.json"
+
+# COMMAND ----------
+
 
 df_orders_raw = (
     spark.read
@@ -21,9 +24,6 @@ df_orders_raw = (
     .option("escape", '"')
     .csv(ORDERS_PATH)
 )
-
-# COMMAND ----------
-
 
 # Custom function is used to apply the transformations
 get_address_udf = F.udf(get_address, StringType())
