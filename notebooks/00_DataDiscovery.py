@@ -32,7 +32,21 @@ df_orders_raw.printSchema()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Discovery --> date as string
+# MAGIC Discoveries 
+# MAGIC - Date as string
+
+# COMMAND ----------
+
+# Format of the date field
+df_orders_raw.select("date").distinct().orderBy("date").show(20)
+
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC Discoveries
+# MAGIC - Format DD.MM.YY (ej. "29.01.22") → will be parsed like so 
+# MAGIC - Range: 2021-2025.
 
 # COMMAND ----------
 
@@ -69,7 +83,8 @@ print(f"[invoices] {n_invoices} filas  × {n_cols_inv} columnas")
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Discovery --> few invoices (~18% orders)
+# MAGIC Discovery 
+# MAGIC - Few invoices (~18% orders)
 
 # COMMAND ----------
 
@@ -154,8 +169,5 @@ else:
 
 # COMMAND ----------
 
-# Format of the date field
- 
-df_orders_raw.select("date").distinct().orderBy("date").show(20)
-# HALLAZGO: formato DD.MM.YY (ej. "29.01.22") → se parseará con
-# to_date(date, 'dd.MM.yy').  Rango de datos: 2021-2025.
+# MAGIC %md
+# MAGIC
