@@ -17,8 +17,6 @@ from pyspark.sql.types import *
 
 spark = SparkSession.builder.getOrCreate()
 
-%run ./000_Setup
-
 # COMMAND ----------
 
 # After manual inspection of the csv --> headers, separator and quote/escape characters identified  

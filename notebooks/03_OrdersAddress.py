@@ -46,12 +46,3 @@ print(f"Total count:{total}")
 print(f"Null adress count:{nulos}")
 print(f"City placeholder count: {unknown}")
 print(f"CP placeholder count: {unk00}")
-
-# COMMAND ----------
-
-# Guardamos en Unity Catalog
-df_2.write \
-    .mode("overwrite") \
-    .option("overwriteSchema", "true") \
-    .format("delta") \
-    .saveAsTable("workspace.ifco_test.address")
