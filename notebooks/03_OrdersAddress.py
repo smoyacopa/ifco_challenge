@@ -1,6 +1,7 @@
 # Databricks notebook source
 # MAGIC %run ./000_Setup
 
+# COMMAND ----------
 
 # Objective: Provide a df containing 'order_id' and 'contact_address' that should adhere to the following information and format: "city name, postal code". If the city name is not available, the placeholder "Unknown" should be used. If the postal code is not known, the placeholder "UNK00" should be used.
 
@@ -12,6 +13,8 @@ import sys
 from transformations import get_address
 
 spark = SparkSession.builder.getOrCreate()
+
+# COMMAND ----------
 
 
 df_orders_raw = (

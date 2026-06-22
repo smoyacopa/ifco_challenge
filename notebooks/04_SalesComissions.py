@@ -1,6 +1,7 @@
 # Databricks notebook source
 # MAGIC %run ./000_Setup
 
+# COMMAND ----------
 
 import re
 from pyspark.sql import SparkSession
@@ -10,6 +11,7 @@ from transformations import calculate_net_value_eur, get_commission_rate
 
 spark = SparkSession.builder.getOrCreate()
 
+# COMMAND ----------
 
 # Typecasting applied after data discovery
 df_invoices = (
@@ -50,6 +52,8 @@ print(f"Unique Invoices: {df_invoices.count()}")
 df_invoices.show(truncate=False)
 
 
+# COMMAND ----------
+
 
 # Sales Owners are placed in individual rows and their positions are captured
 
@@ -75,7 +79,7 @@ df_salesowners = spark.sql("""
 
 df_salesowners.show(20, truncate=False)
 
- # Join orders - invoices and comissions calculation comissions
+ # Join orders - invoices and comissions calculation calcular comissions
 
 commission_rate_udf = F.udf(get_commission_rate, DoubleType())
 
