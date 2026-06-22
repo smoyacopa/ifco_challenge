@@ -1,8 +1,6 @@
 # Databricks notebook source
 # MAGIC %run ./000_Setup
 
-# COMMAND ----------
-
 # Objective: Provide a df containing 'order_id' and 'contact_full_name' that must contain the full name of the contact. In case this information is not available, the placeholder "John Doe" should be utilized.
 
 import re
@@ -13,8 +11,6 @@ import sys
 from transformations import get_full_name
 
 spark = SparkSession.builder.getOrCreate()
-
-# COMMAND ----------
 
 
 df_orders_raw = (

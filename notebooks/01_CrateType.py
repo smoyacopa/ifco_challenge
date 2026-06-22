@@ -1,8 +1,6 @@
 # Databricks notebook source
 # MAGIC %run ./000_Setup
 
-# COMMAND ----------
-
 # Objective: Calculate the distribution of crate types per company (number of orders per type). Ensure to include unit tests to validate the correctness of your calculations.
 
 import json
@@ -14,8 +12,6 @@ from transformations import normalize_company_name, get_crate_distribution_by_co
 
 
 spark = SparkSession.builder.getOrCreate()
-
-# COMMAND ----------
 
 df_orders_raw = (
     spark.read
@@ -37,8 +33,6 @@ df_orders = df_orders_raw.withColumn(
 )
 
 
-
-# COMMAND ----------
 
 # Call the transformation function directly (not as a UDF)
 df_distribution = get_crate_distribution_by_company(df_orders)

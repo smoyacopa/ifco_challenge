@@ -1,8 +1,6 @@
 # Databricks notebook source
 # MAGIC %run ./000_Setup
 
-# COMMAND ----------
-
 import re
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
@@ -11,8 +9,6 @@ from transformations import normalize_company_name
 
 
 spark = SparkSession.builder.getOrCreate()
-
-# COMMAND ----------
 
 df_orders_raw = (
     spark.read
@@ -55,8 +51,6 @@ df_invoices = spark.sql("""
     )
     WHERE rn = 1
 """)
-
-# COMMAND ----------
 
 # Explode salesowners and get unique values by company
 
